@@ -1,0 +1,35 @@
+_BASE_: "det_pretrain.yaml"
+MODEL:
+  META_ARCHITECTURE: "PromptedSwinSimFPNLiteRCNNPSBoxAug"
+  WEIGHTS: "outputs/det_pretrain/model_final.pth"
+PERSON_SEARCH:
+  QUERY_ENCODER_WEIGHTS: "Data/model_zoo/swin_small_patch4_window7_224_22k_d2.pkl"
+  DET:
+    MODEL:
+      TRANSFORMER:
+        WITH_CP: True
+  REID:
+    LOSS:
+      INC_OIM:
+        NUM_LB: [5532,]
+        LEN_ULB: [5000,]
+SOLVER:
+  OPTIM: "Adam"
+  BASE_LR: 0.0003
+  MAX_ITER: 22416 
+  CHECKPOINT_PERIOD: 2802
+  GAMMA: 0.1
+  WEIGHT_DECAY: 0.0
+  IMS_PER_BATCH: 8
+INPUT:
+  MIN_SIZE_TRAIN: (480, 512, 544, 576, 608, 640, 672, 704, 736, 768, 800)
+  MAX_SIZE_TRAIN: 1333
+  MIN_SIZE_TEST: 800
+  MAX_SIZE_TEST: 1333
+DATASETS:
+  TRAIN: ("CUHK-SYSU_Train",) 
+  TEST: ("CUHK-SYSU_Gallery","CUHK-SYSU_TestG100",) #
+TEST:
+  IMS_PER_PROC: 2
+  EVAL_PERIOD: 2802
+OUTPUT_DIR: "outputs/pops_cuhk"

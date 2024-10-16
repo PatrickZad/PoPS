@@ -1,0 +1,1 @@
+python tools/train_ps_net.py --config-file configs/pops_cuhk2prw2mvn.yaml  --num-gpus 4 --resume --eval-only --dist-url tcp://127.0.0.1:60888

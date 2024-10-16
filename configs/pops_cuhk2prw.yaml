@@ -1,0 +1,22 @@
+_BASE_: "pops_cuhk.yaml"
+MODEL:
+  WEIGHTS: "outputs/pops_cuhk/model_final.pth"
+PERSON_SEARCH:
+  QUERY_ENCODER_WEIGHTS: "Data/model_zoo/swin_small_patch4_window7_224_22k_d2.pkl"
+  PROMPT:
+    CURRENT_TASK: 1
+  REID:
+    LOSS:
+      INC_OIM:
+        NUM_LB: [5532,483]
+        LEN_ULB: [5000,500]
+SOLVER:
+  STEPS: (17112,)
+  MAX_ITER: 25668 
+  CHECKPOINT_PERIOD: 1426
+DATASETS:
+  TRAIN: ("PRW_Train",) 
+  TEST: ("CUHK-SYSU_Gallery","CUHK-SYSU_TestG100","PRW_Gallery","PRW_Query",) #
+TEST:
+  EVAL_PERIOD: 1426
+OUTPUT_DIR: "outputs/pops_cuhk2prw"

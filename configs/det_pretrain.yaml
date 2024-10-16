@@ -1,0 +1,25 @@
+_BASE_: "base.yaml"
+MODEL:
+  META_ARCHITECTURE: "SwinSimFPNRCNNLite"
+  WEIGHTS: "Data/model_zoo/swin_small_patch4_window7_224_22k_d2.pkl"
+PERSON_SEARCH:
+  DET:
+    MODEL:
+      TRANSFORMER:
+        WITH_CP: False
+SOLVER:
+  OPTIM: "AdamW"
+  LR_SCHEDULER_NAME: "WarmupMultiStepLR"
+  WARMUP_ITERS: 1000
+  BASE_LR: 0.0001
+  WEIGHT_DECAY: 0.01
+  STEPS: (98900,)
+  MAX_ITER: 296700
+  CHECKPOINT_PERIOD: 9890
+  GAMMA: 0.1
+  IMS_PER_BATCH: 16
+DATASETS:
+  TRAIN: ("COCO-CH",) 
+TEST:
+  EVAL_PERIOD: 300000
+OUTPUT_DIR: "outputs/det_pretrain"

@@ -1,0 +1,27 @@
+_BASE_: "pops_cuhk.yaml"
+MODEL:
+  WEIGHTS: "outputs/pops_cuhk2prw/model_final.pth"
+PERSON_SEARCH:
+  PROMPT:
+    CURRENT_TASK: 2
+  REID:
+    LOSS:
+      INC_OIM:
+        NUM_LB: [5532,483,2807]
+        LEN_ULB: [5000,500,3000]
+SOLVER:
+  MAX_ITER: 20160 
+  CHECKPOINT_PERIOD: 2520
+  IMS_PER_BATCH: 16
+INPUT:
+  MIN_SIZE_TRAIN: (160,192,224, 240)
+  MAX_SIZE_TRAIN: 720
+  MIN_SIZE_TEST_INC: [800,800,800,800,240,240]
+  MAX_SIZE_TEST_INC: [1333,1333,1333,1333,720,720]
+DATASETS:
+  TRAIN: ("MovieNet_Train_app10",) 
+  TEST: ("CUHK-SYSU_Gallery","CUHK-SYSU_TestG100","PRW_Gallery","PRW_Query","MovieNet_GalleryTestG2000","MovieNet_TestG2000",) #
+TEST:
+  IMS_PER_PROC: 3
+  EVAL_PERIOD: 2520
+OUTPUT_DIR: "outputs/pops_cuhk2prw2mvn"
